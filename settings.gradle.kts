@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "DogBreeds"
 include(":app")
 include(":common")
+include(":feature:list")
+include(":ui")
