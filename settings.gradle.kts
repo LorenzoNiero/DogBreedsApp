@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "DogBreeds"
 include(":app")
- 
+include(":common")
