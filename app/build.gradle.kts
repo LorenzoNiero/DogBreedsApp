@@ -48,7 +48,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtension.get().toString()
     }
     packaging {
         resources {
@@ -60,10 +60,11 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":feature:list"))
+    implementation(project(":ui"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
-    implementation(libs.androidx.navigation.compose)
+    debugImplementation(libs.ui.tooling)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

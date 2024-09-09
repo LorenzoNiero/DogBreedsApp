@@ -8,21 +8,26 @@ android {
 
     flavorDimensions += "environment"
     productFlavors {
-        register("dev") {
+        create("dev") {
             dimension = "environment"
         }
-        register("prod") {
+        create("prod") {
             dimension = "environment"
         }
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtension.get().toString()
     }
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose)
+    debugImplementation(libs.ui.tooling)
+    implementation(libs.bundles.coil)
 }

@@ -8,10 +8,10 @@ android {
 
     flavorDimensions += "environment"
     productFlavors {
-        register("dev") {
+        create("dev") {
             dimension = "environment"
         }
-        register("prod") {
+        create("prod") {
             dimension = "environment"
         }
     }
