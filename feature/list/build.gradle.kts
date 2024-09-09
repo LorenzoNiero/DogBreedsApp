@@ -27,7 +27,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":common"))
     implementation(project(":ui"))
+    implementation(project(":network"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
