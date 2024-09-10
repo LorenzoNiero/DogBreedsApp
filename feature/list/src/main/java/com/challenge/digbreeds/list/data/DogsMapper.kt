@@ -1,6 +1,6 @@
 package com.challenge.digbreeds.list.data
 
-import com.challenge.digbreeds.list.domain.entity.Dog
+import com.challenge.dogbreeds.common.domain.entity.Dog
 import com.challenge.dogbreeds.network.data.model.DogsNetwork
 
 
@@ -11,6 +11,7 @@ fun DogsNetwork.mapToDomainModel(): List<Dog> {
 private fun Map.Entry<String, List<String>>.mapToDomainModel() : Dog {
     return Dog(
         name = this.key,
+        imageUrl = null,
         subBreeds = this.value
     )
 }

@@ -1,19 +1,14 @@
 package com.challenge.digbreeds.list.presentation
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.challenge.digbreeds.list.R
 import com.challenge.digbreeds.list.domain.usecase.GetDogsWithBreedsUseCase
 import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.Result
-import com.challenge.dogbreeds.common.domain.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -28,12 +23,10 @@ class ListViewModel @Inject constructor(
     internal val uiState: State<ListUiState> by lazy { _uiState }
 
     init {
-        viewModelScope.launch {
-            getDogs()
-        }
+        refresh()
     }
 
-    private suspend fun getDogs() {
+    private suspend fun fetchDogs() {
         _uiState.value = ListUiState.Loading
 
         withContext(Dispatchers.IO){
@@ -55,8 +48,16 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    fun refresh() {
+    fun loadImage(breedId : String){
+        viewModelScope.launch {
+            fetchDogs()
+        }
+    }
 
+    fun refresh() {
+        viewModelScope.launch {
+            fetchDogs()
+        }
     }
 
 }

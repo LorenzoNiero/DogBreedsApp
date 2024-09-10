@@ -26,6 +26,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":common"))
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
     debugImplementation(libs.ui.tooling)
