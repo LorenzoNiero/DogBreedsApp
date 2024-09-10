@@ -18,29 +18,21 @@ import com.challenge.dogbreeds.ui.R
 
 @Composable
 fun ImageLoader(url: String, modifier: Modifier = Modifier) {
-//    val painter: Painter =
-//        rememberAsyncImagePainter(
-//            ImageRequest.Builder
-//                (LocalContext.current).data(data = url).apply(block = fun ImageRequest.Builder.() {
-//                crossfade(true)
-//                error(R.drawable.icon_no_image_24)
-//                placeholder(R.drawable.icon_image_placeholder_24)
-//                memoryCachePolicy(CachePolicy.ENABLED) // enable cache ram (optional)
-//                diskCachePolicy(CachePolicy.ENABLED) // enable cache disk(optional)
-//            }).build()
-//        )
-//
-//    Image(
-//        painter = painter,
-//        contentDescription = null,
-//        modifier = modifier
-//    )
-
-    AsyncImage(
-        model = url,
-        contentDescription = "image",
-        modifier = modifier,
-        contentScale = ContentScale.Crop,
+    val painter: Painter =
+        rememberAsyncImagePainter(
+            ImageRequest.Builder
+                (LocalContext.current).data(data = url).apply(block = fun ImageRequest.Builder.() {
+                crossfade(true)
+                error(R.drawable.icon_no_image_24)
+                placeholder(R.drawable.icon_image_placeholder_24)
+                memoryCachePolicy(CachePolicy.ENABLED) // enable cache ram (optional)
+                diskCachePolicy(CachePolicy.ENABLED) // enable cache disk(optional)
+            }).build()
         )
 
+    Image(
+        painter = painter,
+        contentDescription = null,
+        modifier = modifier
+    )
 }

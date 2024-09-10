@@ -5,13 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,26 +15,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.challenge.dogbreeds.common.domain.entity.Dog
-import com.challenge.dogbreeds.ui.R
+import com.challenge.dogbreeds.common.domain.entity.SubBreed
 import com.challenge.dogbreeds.ui.theme.Dimens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+
 @Composable
-fun DogCell(
-    dog: Dog,
+fun SubBreedCell(
+    dog: SubBreed,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     getImageUrl: suspend (String) -> Unit = {},
-    onClickIcon: () -> Unit = {},
-    isExpanded: Boolean?
 ) {
-    CardSurface(modifier = modifier ) {
+    Box(modifier = modifier ) {
         var imageLoading by remember { mutableStateOf(false) }
         LaunchedEffect(dog.id) {
             withContext(Dispatchers.IO) {
@@ -86,28 +74,6 @@ fun DogCell(
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
 //                modifier = Modifier.weight(1.0f)
             )
-
-            isExpanded?.let {
-                IconButton({
-                    onClickIcon()
-                }) {
-                    Icon(
-                        painter = painterResource(if (isExpanded) {R.drawable.icon_expand_less_24 } else {R.drawable.icon_expand_more_24}),
-                        contentDescription = "icon"
-                    )
-                }
-
-            }
         }
     }
 }
-
-@Preview()
-@Composable
-fun CustomerCardPreview() {
-    Surface(Modifier.width(900.dp)) {
-        DogCell(dog = Dog("id","DogName", emptyList(), null), isExpanded = null)
-    }
-}
-
-

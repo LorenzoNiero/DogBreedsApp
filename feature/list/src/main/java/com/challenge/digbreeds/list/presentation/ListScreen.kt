@@ -1,18 +1,23 @@
 package com.challenge.digbreeds.list.presentation
 
 import android.content.res.Configuration
+import android.widget.Space
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -35,7 +40,9 @@ import androidx.navigation.NavHostController
 import com.challenge.digbreeds.list.R
 import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.entity.Dog
+import com.challenge.dogbreeds.common.domain.entity.SubBreed
 import com.challenge.dogbreeds.ui.component.DogCell
+import com.challenge.dogbreeds.ui.component.SubBreedCell
 import com.challenge.dogbreeds.ui.component.TopBar
 import com.challenge.dogbreeds.ui.R as R_UI
 
@@ -136,7 +143,10 @@ private fun ListContent(
                                 dog = dog,
                                 isExpanded = isExpandedMap[index] ?: false,
                                 onHeaderClick = {
-                                    isExpandedMap[index] = !(isExpandedMap[index] ?: true)
+                                   //todo: navigate to detail
+                                },
+                                onExpandClick = {
+                                    isExpandedMap[index] = !(isExpandedMap[index] ?: false)
                                 },
                                 getImageUrl = getImageUrl
                             )
@@ -152,6 +162,7 @@ fun LazyListScope.accordion(
     dog: Dog,
     isExpanded: Boolean,
     onHeaderClick: () -> Unit,
+    onExpandClick: () -> Unit,
     getImageUrl: suspend (String)-> Unit
 ) {
     item {
@@ -159,14 +170,26 @@ fun LazyListScope.accordion(
             dog,
             modifier = Modifier.fillMaxWidth(),
             onClick = onHeaderClick,
-            getImageUrl = getImageUrl
+            getImageUrl = getImageUrl,
+            isExpanded = if (dog.subBreeds.isEmpty()) { null } else { isExpanded },
+            onClickIcon = onExpandClick
         )
     }
 
     if(isExpanded) {
         items(dog.subBreeds) { subBreed ->
-            Text(subBreed)
+            SubBreedCell(
+                subBreed,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onHeaderClick,
+                getImageUrl = getImageUrl,
+            )
+            HorizontalDivider()
         }
+    }
+
+    item {
+       Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
@@ -174,7 +197,7 @@ fun LazyListScope.accordion(
 @Composable
 private fun ListScreenPreview() {
     ListContent(
-        uiState = ListUiState.Result(listOf(Dog("DogName", listOf("subBreed1", "subBreed2"), null))),
+        uiState = ListUiState.Result(listOf(Dog("id","DogName", listOf(SubBreed("id","SubBreedName", null)), null))),
         onRefresh = {}
     )
 }
