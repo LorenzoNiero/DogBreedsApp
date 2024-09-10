@@ -1,6 +1,6 @@
 package com.challenge.dogbreeds.network.api
 
-import com.challenge.dogbreeds.network.data.model.DogNetwork
+import com.challenge.dogbreeds.network.data.model.DogsNetwork
 import retrofit2.http.GET
 
 /**
@@ -14,7 +14,7 @@ interface DogApi {
      * Get all breeds of dogs
      */
     @GET("breeds/list/all")
-    suspend fun getAllBreeds() : List<DogNetwork>
+    suspend fun getAllBreeds() : DogsNetwork
 
 //    /**
 //     * Gets a random image of a dog
