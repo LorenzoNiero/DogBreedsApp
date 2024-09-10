@@ -1,6 +1,7 @@
 package com.challenge.digbreeds.list.mock
 
 import com.challenge.dogbreeds.common.domain.entity.Dog
+import com.challenge.dogbreeds.common.domain.entity.SubBreed
 
 object DomainMock {
 
@@ -12,9 +13,25 @@ object DomainMock {
             imageUrl = null
         ),
         Dog(
-            id = "african",
-            name = "African",
-            subBreeds = listOf(),
+            id = "bulldog",
+            name = "Bulldog",
+            subBreeds = listOf(
+                SubBreed(
+                    id = "boston",
+                    name = "Boston",
+                    imageUrl = null
+                ),
+                SubBreed(
+                    id = "english",
+                    name = "English",
+                    imageUrl = null
+                ),
+                SubBreed(
+                    id = "french",
+                    name = "French",
+                    imageUrl = null
+                )
+            ),
             imageUrl = null
         )
 
@@ -23,3 +40,4 @@ object DomainMock {
     val imageUrl = "https://images.dog.ceo/breeds/affenpinscher/n02110627_233.jpg"
 
 }
+
