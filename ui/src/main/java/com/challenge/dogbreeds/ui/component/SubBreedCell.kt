@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import com.challenge.dogbreeds.common.domain.entity.SubBreed
+import com.challenge.dogbreeds.ui.R
 import com.challenge.dogbreeds.ui.theme.Dimens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -61,10 +64,10 @@ fun SubBreedCell(
 //                if (imageLoading) {
 //                    CircularProgressIndicator(modifier = Modifier.padding(start = 8.dp))
 //                } else {
-//                    ImageLoader(
-//                        url = dog.imageUrl ?: "",
-//                        modifier = Modifier.size(dimensionResource(R.dimen.icon_size_image))
-//                    )
+                    ImageLoader(
+                        url = dog.imageUrl ?: "",
+                        modifier = Modifier.size(dimensionResource(R.dimen.icon_size_image))
+                    )
 //                }
 //            }
 

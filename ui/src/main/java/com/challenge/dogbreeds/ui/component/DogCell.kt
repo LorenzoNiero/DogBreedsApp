@@ -73,10 +73,10 @@ fun DogCell(
 //                if (imageLoading) {
 //                    CircularProgressIndicator(modifier = Modifier.padding(start = 8.dp))
 //                } else {
-//                    ImageLoader(
-//                        url = dog.imageUrl ?: "",
-//                        modifier = Modifier.size(dimensionResource(R.dimen.icon_size_image))
-//                    )
+                    ImageLoader(
+                        url = dog.imageUrl ?: "",
+                        modifier = Modifier.size(dimensionResource(R.dimen.icon_size_image))
+                    )
 //                }
 //            }
 
