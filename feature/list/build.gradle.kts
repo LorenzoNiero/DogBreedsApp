@@ -40,6 +40,9 @@ dependencies {
     implementation(libs.hilt.compose)
 
     testImplementation(libs.junit)
+    testImplementation (libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
