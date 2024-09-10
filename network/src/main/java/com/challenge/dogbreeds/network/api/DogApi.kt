@@ -1,7 +1,10 @@
 package com.challenge.dogbreeds.network.api
 
 import com.challenge.dogbreeds.network.data.model.DogsNetwork
+import com.challenge.dogbreeds.network.data.model.ImageNetwork
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * Implementation of endpoint
@@ -16,11 +19,11 @@ interface DogApi {
     @GET("breeds/list/all")
     suspend fun getAllBreeds() : DogsNetwork
 
-//    /**
-//     * Gets a random image of a dog
-//     * @param id
-//     */
-//    @GET("breed/{breed}/images/random")
-//    suspend fun getBreedImage(@Query("breed") breedId: String) : ImageNetwork
+    /**
+     * Gets a random image of a dog
+     * @param id
+     */
+    @GET("breed/{breed}/images/random")
+    suspend fun getBreedImage(@Path("breed") breedId: String) : ImageNetwork
 
 }

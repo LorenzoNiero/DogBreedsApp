@@ -11,8 +11,12 @@ class DogRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource,
 ) : DogRepository {
 
-    override suspend fun getAllDogs() : List<Dog> = withContext(Dispatchers.IO) {
-        networkDataSource.getDogsWithSubBreeds().mapToDomainModel()
+    override suspend fun fetchAllDogs() : List<Dog> = withContext(Dispatchers.IO) {
+        networkDataSource.fetchDogsWithSubBreeds().mapToDomainModel()
+    }
+
+    override suspend fun fetchImageUrl(breedId: String) : String = withContext(Dispatchers.IO) {
+        networkDataSource.fetchImageDogRandom(breedId).message
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.challenge.digbreeds.list.domain.usecase.GetDogsWithBreedsUseCase
+import com.challenge.digbreeds.list.domain.usecase.GetUrlImageFromBreedUseCase
 import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
-    private val getDogsWithBreedsUseCase: GetDogsWithBreedsUseCase
+    private val getDogsWithBreedsUseCase: GetDogsWithBreedsUseCase,
+    private val getUrlImageFromBreedUseCase: GetUrlImageFromBreedUseCase
 ) : ViewModel() {
 
     private val _uiState by lazy { mutableStateOf<ListUiState>(ListUiState.Loading) }
@@ -48,9 +50,28 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    fun loadImage(breedId : String){
-        viewModelScope.launch {
-            fetchDogs()
+    suspend fun loadImage(breedId : String) {
+        withContext(Dispatchers.IO) {
+            when (val result = getUrlImageFromBreedUseCase(breedId)) {
+                is Result.Error -> {
+
+                }
+
+                is Result.Success -> {
+                    val uiState = uiState.value
+                    if (uiState is ListUiState.Result) {
+                        _uiState.value = uiState
+                            .copy(dogs = uiState.dogs
+                                .map { dog ->
+                                    if (dog.name == breedId) {
+                                        dog.copy(imageUrl = result.data)
+                                    } else {
+                                        dog
+                                    }
+                                })
+                    }
+                }
+            }
         }
     }
 

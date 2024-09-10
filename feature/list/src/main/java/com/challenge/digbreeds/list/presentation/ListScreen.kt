@@ -16,19 +16,15 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateMap
-import androidx.compose.runtime.toMutableStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.key
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -41,8 +37,6 @@ import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.entity.Dog
 import com.challenge.dogbreeds.ui.component.DogCell
 import com.challenge.dogbreeds.ui.component.TopBar
-import kotlin.collections.map
-import kotlin.collections.toTypedArray
 import com.challenge.dogbreeds.ui.R as R_UI
 
 @Composable
@@ -54,14 +48,16 @@ fun ListScreen (
 
     ListContent(
         uiState = uiState,
-        onRefresh = { viewModel.refresh() }
+        onRefresh = { viewModel.refresh() },
+        getImageUrl = { viewModel.loadImage(it) }
     )
 }
 
 @Composable
 private fun ListContent(
     uiState: ListUiState,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    getImageUrl: suspend (String)-> Unit = {}
     )
 {
     Scaffold(
@@ -141,7 +137,8 @@ private fun ListContent(
                                 isExpanded = isExpandedMap[index] ?: false,
                                 onHeaderClick = {
                                     isExpandedMap[index] = !(isExpandedMap[index] ?: true)
-                                }
+                                },
+                                getImageUrl = getImageUrl
                             )
                         }
                     }
@@ -154,13 +151,15 @@ private fun ListContent(
 fun LazyListScope.accordion(
     dog: Dog,
     isExpanded: Boolean,
-    onHeaderClick: () -> Unit
+    onHeaderClick: () -> Unit,
+    getImageUrl: suspend (String)-> Unit
 ) {
     item {
         DogCell(
             dog,
             modifier = Modifier.fillMaxWidth(),
-            onClick = onHeaderClick
+            onClick = onHeaderClick,
+            getImageUrl = getImageUrl
         )
     }
 
