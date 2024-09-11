@@ -6,7 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "com.challenge.digbreeds.list"
+    namespace = "com.challenge.dogbreeds.database"
+
     flavorDimensions += "environment"
     productFlavors {
         create("dev") {
@@ -17,33 +18,28 @@ android {
         }
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtension.get().toString()
+    kapt{
+        arguments {
+            //directory schema migrations db
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
     }
 }
 
 dependencies {
-    implementation(project(":common"))
-    implementation(project(":ui"))
-    implementation(project(":network"))
-    implementation(project(":database"))
-
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.bundles.compose)
-    debugImplementation(libs.ui.tooling)
-
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.compose)
 
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    implementation(libs.kotlinx.coroutines.android)
+
     testImplementation(libs.junit)
     testImplementation (libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
-
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.mockwebserver)
 }
