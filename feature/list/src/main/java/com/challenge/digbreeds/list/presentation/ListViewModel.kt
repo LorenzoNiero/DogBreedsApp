@@ -10,6 +10,7 @@ import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -24,8 +25,22 @@ class ListViewModel @Inject constructor(
     private val _uiState by lazy { mutableStateOf<ListUiState>(ListUiState.Loading) }
     internal val uiState: State<ListUiState> by lazy { _uiState }
 
+    private val imageUpdateFlow = MutableSharedFlow<String>()
+
     init {
-        refresh()
+        refreshList()
+
+        viewModelScope.launch {
+            imageUpdateFlow.collect{ breedId ->
+                fetchUrlImage(breedId)
+            }
+        }
+    }
+
+    fun refreshList() {
+        viewModelScope.launch {
+            fetchDogs()
+        }
     }
 
     private suspend fun fetchDogs() {
@@ -50,7 +65,13 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    suspend fun fetchUrlImage(breedId : String) {
+    fun enqueueFetchImageUrl(breedId : String) {
+        viewModelScope.launch {
+            imageUpdateFlow.emit(breedId)
+        }
+    }
+
+    private suspend fun fetchUrlImage(breedId : String) {
         withContext(Dispatchers.IO) {
             when (val result = getUrlImageFromBreedUseCase(breedId)) {
                 is Result.Error -> {
@@ -65,7 +86,14 @@ class ListViewModel @Inject constructor(
                                 if (dog.id == breedId) {
                                     dog.copy(imageUrl = result.data)
                                 } else {
-                                    dog
+                                    dog.copy(subBreeds = dog.subBreeds.map { subBreed ->
+                                        if (subBreed.id == breedId) {
+                                            subBreed.copy(imageUrl = result.data)
+                                        }
+                                        else{
+                                            subBreed
+                                        }
+                                    })
                                 }
                             }
                         )
@@ -74,12 +102,5 @@ class ListViewModel @Inject constructor(
             }
         }
     }
-
-    fun refresh() {
-        viewModelScope.launch {
-            fetchDogs()
-        }
-    }
-
 }
 

@@ -39,8 +39,8 @@ import com.challenge.digbreeds.list.R
 import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.entity.Dog
 import com.challenge.dogbreeds.common.domain.entity.SubBreed
-import com.challenge.dogbreeds.ui.component.DogCell
-import com.challenge.dogbreeds.ui.component.SubBreedCell
+import com.challenge.dogbreeds.ui.component.cell.DogCell
+import com.challenge.dogbreeds.ui.component.cell.SubBreedCell
 import com.challenge.dogbreeds.ui.component.TopBar
 import com.challenge.dogbreeds.ui.R as R_UI
 
@@ -53,8 +53,8 @@ fun ListScreen (
 
     ListContent(
         uiState = uiState,
-        onRefresh = { viewModel.refresh() },
-        getImageUrl = { viewModel.fetchUrlImage(it) }
+        onRefresh = { viewModel.refreshList() },
+        getImageUrl = { viewModel.enqueueFetchImageUrl(it) }
     )
 }
 
@@ -62,7 +62,7 @@ fun ListScreen (
 private fun ListContent(
     uiState: ListUiState,
     onRefresh: () -> Unit,
-    getImageUrl: suspend (String)-> Unit = {}
+    getImageUrl: (String)-> Unit = {}
     )
 {
     Scaffold(
@@ -140,7 +140,7 @@ private fun ListContent(
                             accordion(
                                 dog = dog,
                                 isExpanded = isExpandedMap[index] ?: false,
-                                onHeaderClick = {
+                                onItemClick = {
                                    //todo: navigate to detail
                                 },
                                 onExpandClick = {
@@ -159,15 +159,15 @@ private fun ListContent(
 fun LazyListScope.accordion(
     dog: Dog,
     isExpanded: Boolean,
-    onHeaderClick: () -> Unit,
+    onItemClick: () -> Unit,
     onExpandClick: () -> Unit,
-    getImageUrl: suspend (String)-> Unit
+    getImageUrl: (String)-> Unit
 ) {
     item {
         DogCell(
             dog,
             modifier = Modifier.fillMaxWidth(),
-            onClick = onHeaderClick,
+            onClick = onItemClick,
             getImageUrl = getImageUrl,
             isExpanded = if (dog.subBreeds.isEmpty()) { null } else { isExpanded },
             onClickIcon = onExpandClick
@@ -179,7 +179,7 @@ fun LazyListScope.accordion(
             SubBreedCell(
                 subBreed,
                 modifier = Modifier.fillMaxWidth(),
-                onClick = onHeaderClick,
+                onClick = onItemClick,
                 getImageUrl = getImageUrl,
             )
             HorizontalDivider()
