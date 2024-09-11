@@ -60,15 +60,15 @@ class ListViewModel @Inject constructor(
                 is Result.Success -> {
                     val uiState = uiState.value
                     if (uiState is ListUiState.Result) {
-                        _uiState.value = uiState
-                            .copy(dogs = uiState.dogs
-                                .map { dog ->
-                                    if (dog.name == breedId) {
-                                        dog.copy(imageUrl = result.data)
-                                    } else {
-                                        dog
-                                    }
-                                })
+                        _uiState.value = uiState.copy(
+                            dogs = uiState.dogs.map { dog ->
+                                if (dog.name == breedId) {
+                                    dog.copy(imageUrl = result.data)
+                                } else {
+                                    dog
+                                }
+                            }
+                        )
                     }
                 }
             }
