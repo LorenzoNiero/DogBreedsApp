@@ -8,7 +8,7 @@ class BreedEntity (
     @PrimaryKey
     override val id: String,
     val name: String,
-    val urlImage : String?
+    var urlImage : String?
     ) : BaseEntity() {
 
     companion object {

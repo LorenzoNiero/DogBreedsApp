@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.challenge.digbreeds.list.domain.usecase.GetDogsWithBreedsUseCase
 import com.challenge.digbreeds.list.domain.usecase.GetUrlImageFromBreedUseCase
+import com.challenge.digbreeds.list.domain.usecase.ObserveDogsWithBreedsUseCase
 import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.Result
 import com.challenge.dogbreeds.common.domain.entity.DogImageStatus
@@ -13,6 +14,10 @@ import com.challenge.dogbreeds.common.domain.entity.StatusImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -21,11 +26,28 @@ import javax.inject.Inject
 @HiltViewModel
 class ListViewModel @Inject constructor(
     private val getDogsWithBreedsUseCase: GetDogsWithBreedsUseCase,
-    private val getUrlImageFromBreedUseCase: GetUrlImageFromBreedUseCase
+    private val getUrlImageFromBreedUseCase: GetUrlImageFromBreedUseCase,
+    private val observeDogsWithBreedsUseCase: ObserveDogsWithBreedsUseCase
 ) : ViewModel() {
 
+
+    val dogsUIState =  observeDogsWithBreedsUseCase().map {
+        if (it.isEmpty()) {
+            ListUiState.Empty
+        } else {
+            ListUiState.Result(it)
+        }
+    }.catch {
+        ListUiState.Error("${it.message}")
+    }
+        .stateIn(
+        scope = viewModelScope,
+        started = WhileSubscribed(5_000),
+        initialValue = ListUiState.Loading
+    )
+
     private val _uiState by lazy { mutableStateOf<ListUiState>(ListUiState.Loading) }
-    internal val uiState: State<ListUiState> by lazy { _uiState }
+    private val uiState: State<ListUiState> by lazy { _uiState }
 
     private val imageUpdateFlow = MutableSharedFlow<String>()
 

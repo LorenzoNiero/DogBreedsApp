@@ -4,6 +4,7 @@ import com.challenge.dogbreeds.common.domain.entity.Dog
 import com.challenge.dogbreeds.common.domain.entity.DogImageStatus
 import com.challenge.dogbreeds.common.domain.entity.StatusImage
 import com.challenge.dogbreeds.common.domain.entity.SubBreed
+import com.challenge.dogbreeds.database.model.BreedEntity
 import com.challenge.dogbreeds.network.data.model.DogsNetwork
 import java.util.Locale
 
@@ -26,3 +27,10 @@ private fun Map.Entry<String, List<String>>.mapToDomainModel() : Dog {
         }
     )
 }
+
+fun BreedEntity.asExternalModel() = Dog(
+    id = id,
+    name = name,
+    subBreeds = emptyList(),
+    image = DogImageStatus(urlImage, if(urlImage != null) {StatusImage.SUCCESS } else {StatusImage.NONE})
+)

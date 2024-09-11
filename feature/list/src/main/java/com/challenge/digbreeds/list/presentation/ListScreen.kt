@@ -21,6 +21,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.saveable.Saver
@@ -49,10 +50,10 @@ fun ListScreen (
     navController: NavHostController,
     viewModel: ListViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState
+    val uiState = viewModel.dogsUIState.collectAsState()
 
     ListContent(
-        uiState = uiState,
+        uiState = uiState.value,
         onRefresh = { viewModel.refreshList() },
         getImageUrl = { viewModel.enqueueFetchImageUrl(it) }
     )
