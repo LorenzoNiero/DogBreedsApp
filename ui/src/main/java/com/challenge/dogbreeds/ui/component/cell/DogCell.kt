@@ -27,7 +27,7 @@ fun DogCell(
 @Composable
 fun CustomerCardPreview() {
     Surface(Modifier.width(900.dp)) {
-        DogCell(dog = Dog("id","DogName", emptyList(), null), isExpanded = null)
+        DogCell(dog = Dog("id","DogName", emptyList()), isExpanded = null)
     }
 }
 

@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import com.challenge.dogbreeds.common.domain.entity.IDog
+import com.challenge.dogbreeds.common.domain.entity.StatusImage
 import com.challenge.dogbreeds.ui.R
 import com.challenge.dogbreeds.ui.component.ImageLoader
 import com.challenge.dogbreeds.ui.theme.Dimens
@@ -41,7 +42,7 @@ internal fun DogContentCell(
 
     LaunchedEffect(dog) {
         withContext(Dispatchers.IO) {
-            if (dog.imageUrl == null && imageLoading.not()) {
+            if (dog.image.imageUrl == null && dog.image.status == StatusImage.NONE && imageLoading.not()) {
                 imageLoading = true
                 try {
                     getImageUrl(dog.id)
@@ -50,7 +51,9 @@ internal fun DogContentCell(
                     Log.e("DogContentDogContentCell", "Error loading image", e)
                 }
             } else {
-                imageLoading = false
+                if (dog.image.status != StatusImage.NONE) {
+                    imageLoading = false
+                }
             }
         }
     }
@@ -72,7 +75,7 @@ internal fun DogContentCell(
                 CircularProgressIndicator(modifier = Modifier)
             } else {
                 ImageLoader(
-                    url = dog.imageUrl ?: "",
+                    url = dog.image.imageUrl ?: "",
                     modifier = Modifier.size(dimensionResource(R.dimen.icon_size_image))
                 )
             }

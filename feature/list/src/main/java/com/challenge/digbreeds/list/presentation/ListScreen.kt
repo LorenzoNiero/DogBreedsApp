@@ -195,7 +195,7 @@ fun LazyListScope.accordion(
 @Composable
 private fun ListScreenPreview() {
     ListContent(
-        uiState = ListUiState.Result(listOf(Dog("id","DogName", listOf(SubBreed("id","SubBreedName", null)), null))),
+        uiState = ListUiState.Result(listOf(Dog("id","DogName", listOf(SubBreed("id","SubBreedName"))))),
         onRefresh = {}
     )
 }

@@ -8,6 +8,8 @@ import com.challenge.digbreeds.list.domain.usecase.GetDogsWithBreedsUseCase
 import com.challenge.digbreeds.list.domain.usecase.GetUrlImageFromBreedUseCase
 import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.Result
+import com.challenge.dogbreeds.common.domain.entity.DogImageStatus
+import com.challenge.dogbreeds.common.domain.entity.StatusImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -73,32 +75,34 @@ class ListViewModel @Inject constructor(
 
     private suspend fun fetchUrlImage(breedId : String) {
         withContext(Dispatchers.IO) {
-            when (val result = getUrlImageFromBreedUseCase(breedId)) {
+            val statusImage = when (val result = getUrlImageFromBreedUseCase(breedId)) {
                 is Result.Error -> {
-
+                    DogImageStatus(null, StatusImage.ERROR)
                 }
 
                 is Result.Success -> {
-                    val uiState = uiState.value
-                    if (uiState is ListUiState.Result) {
-                        _uiState.value = uiState.copy(
-                            dogs = uiState.dogs.map { dog ->
-                                if (dog.id == breedId) {
-                                    dog.copy(imageUrl = result.data)
-                                } else {
-                                    dog.copy(subBreeds = dog.subBreeds.map { subBreed ->
-                                        if (subBreed.id == breedId) {
-                                            subBreed.copy(imageUrl = result.data)
-                                        }
-                                        else{
-                                            subBreed
-                                        }
-                                    })
-                                }
-                            }
-                        )
-                    }
+                    DogImageStatus(result.data, StatusImage.SUCCESS)
                 }
+            }
+
+            val uiState = uiState.value
+            if (uiState is ListUiState.Result) {
+                _uiState.value = uiState.copy(
+                    dogs = uiState.dogs.map { dog ->
+                        if (dog.id == breedId) {
+                            dog.copy(image = statusImage)
+                        } else {
+                            dog.copy(subBreeds = dog.subBreeds.map { subBreed ->
+                                if (subBreed.id == breedId) {
+                                    subBreed.copy(image = statusImage)
+                                }
+                                else{
+                                    subBreed
+                                }
+                            })
+                        }
+                    }
+                )
             }
         }
     }
