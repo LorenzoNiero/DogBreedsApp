@@ -1,5 +1,6 @@
 package com.challenge.dogbreeds.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -7,7 +8,7 @@ import com.challenge.dogbreeds.database.dao.BreedDao
 import com.challenge.dogbreeds.database.model.BreedEntity
 
 
-const val VERSION_DATABASE = 1
+const val VERSION_DATABASE = 2
 
 @Database(
     entities = [
@@ -15,7 +16,7 @@ const val VERSION_DATABASE = 1
     ],
     version = VERSION_DATABASE,
     autoMigrations = [
-//         AutoMigration (from = 1, to = VERSION_DATABASE),
+         AutoMigration (from = 1, to = VERSION_DATABASE),
                 ],
     exportSchema = true,
 )
