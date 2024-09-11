@@ -50,7 +50,7 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    suspend fun loadImage(breedId : String) {
+    suspend fun fetchUrlImage(breedId : String) {
         withContext(Dispatchers.IO) {
             when (val result = getUrlImageFromBreedUseCase(breedId)) {
                 is Result.Error -> {
@@ -62,7 +62,7 @@ class ListViewModel @Inject constructor(
                     if (uiState is ListUiState.Result) {
                         _uiState.value = uiState.copy(
                             dogs = uiState.dogs.map { dog ->
-                                if (dog.name == breedId) {
+                                if (dog.id == breedId) {
                                     dog.copy(imageUrl = result.data)
                                 } else {
                                     dog

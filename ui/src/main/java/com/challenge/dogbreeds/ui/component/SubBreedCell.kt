@@ -1,11 +1,13 @@
 package com.challenge.dogbreeds.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +42,8 @@ fun SubBreedCell(
                     try {
                         getImageUrl(dog.id)
                     } catch (e: Exception) {
-                        //todo show error
+                        //TODO: show message error
+                        Log.e("SubBreedCell", "Error loading image", e)
                     } finally {
                         imageLoading = false
                     }
@@ -57,25 +60,24 @@ fun SubBreedCell(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-//            Box(
-//                Modifier.size(dimensionResource(R.dimen.icon_size_image)),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                if (imageLoading) {
-//                    CircularProgressIndicator(modifier = Modifier.padding(start = 8.dp))
-//                } else {
+            Box(
+                Modifier.size(dimensionResource(R.dimen.icon_size_image)),
+                contentAlignment = Alignment.Center
+            ) {
+                if (imageLoading) {
+                    CircularProgressIndicator(modifier = Modifier)
+                } else {
                     ImageLoader(
                         url = dog.imageUrl ?: "",
                         modifier = Modifier.size(dimensionResource(R.dimen.icon_size_image))
                     )
-//                }
-//            }
+                }
+            }
 
             Text(
                 dog.name,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
-//                modifier = Modifier.weight(1.0f)
             )
         }
     }

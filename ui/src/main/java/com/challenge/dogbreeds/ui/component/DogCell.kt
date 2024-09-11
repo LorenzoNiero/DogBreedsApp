@@ -1,5 +1,6 @@
 package com.challenge.dogbreeds.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,6 +43,7 @@ fun DogCell(
 ) {
     CardSurface(modifier = modifier ) {
         var imageLoading by remember { mutableStateOf(false) }
+
         LaunchedEffect(dog.id) {
             withContext(Dispatchers.IO) {
                 if (dog.imageUrl == null && imageLoading.not()) {
@@ -49,7 +51,8 @@ fun DogCell(
                     try {
                         getImageUrl(dog.id)
                     } catch (e: Exception) {
-                        //todo show error
+                        //TODO: show error
+                        Log.e("DogCell", "Error loading image", e)
                     } finally {
                         imageLoading = false
                     }
@@ -66,19 +69,19 @@ fun DogCell(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-//            Box(
-//                Modifier.size(dimensionResource(R.dimen.icon_size_image)),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                if (imageLoading) {
-//                    CircularProgressIndicator(modifier = Modifier.padding(start = 8.dp))
-//                } else {
+            Box(
+                Modifier.size(dimensionResource(R.dimen.icon_size_image)),
+                contentAlignment = Alignment.Center
+            ) {
+                if (imageLoading) {
+                    CircularProgressIndicator(modifier = Modifier)
+                } else {
                     ImageLoader(
                         url = dog.imageUrl ?: "",
                         modifier = Modifier.size(dimensionResource(R.dimen.icon_size_image))
                     )
-//                }
-//            }
+                }
+            }
 
             Text(
                 dog.name,

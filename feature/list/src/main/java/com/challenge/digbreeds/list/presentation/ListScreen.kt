@@ -1,7 +1,6 @@
 package com.challenge.digbreeds.list.presentation
 
 import android.content.res.Configuration
-import android.widget.Space
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
@@ -56,7 +54,7 @@ fun ListScreen (
     ListContent(
         uiState = uiState,
         onRefresh = { viewModel.refresh() },
-        getImageUrl = { viewModel.loadImage(it) }
+        getImageUrl = { viewModel.fetchUrlImage(it) }
     )
 }
 
@@ -202,30 +200,30 @@ private fun ListScreenPreview() {
     )
 }
 
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Composable
-//private fun ListScreen_Loading_Preview() {
-//    ListContent(
-//        uiState = ListUiState.Loading,
-//        onRefresh = {}
-//    )
-//}
-//
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Composable
-//private fun ListScreen_Error_Preview() {
-//    ListContent(
-//        uiState = ListUiState.Error("message error"),
-//        onRefresh = {}
-//    )
-//}
-//
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Composable
-//private fun ListScreen_Empty_Preview() {
-//    ListContent(
-//        uiState = ListUiState.Empty,
-//        onRefresh = {}
-//    )
-//}
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Composable
+private fun ListScreen_Loading_Preview() {
+    ListContent(
+        uiState = ListUiState.Loading,
+        onRefresh = {}
+    )
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Composable
+private fun ListScreen_Error_Preview() {
+    ListContent(
+        uiState = ListUiState.Error("message error"),
+        onRefresh = {}
+    )
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Composable
+private fun ListScreen_Empty_Preview() {
+    ListContent(
+        uiState = ListUiState.Empty,
+        onRefresh = {}
+    )
+}
 
