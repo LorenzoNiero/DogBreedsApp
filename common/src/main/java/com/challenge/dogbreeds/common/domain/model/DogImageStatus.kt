@@ -1,4 +1,4 @@
-package com.challenge.dogbreeds.common.domain.entity
+package com.challenge.dogbreeds.common.domain.model
 
 data class DogImageStatus (
     val imageUrl: String?,

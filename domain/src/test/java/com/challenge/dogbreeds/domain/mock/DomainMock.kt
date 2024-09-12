@@ -1,7 +1,7 @@
 package com.challenge.dogbreeds.domain.mock
 
-import com.challenge.dogbreeds.common.domain.entity.Dog
-import com.challenge.dogbreeds.common.domain.entity.SubBreed
+import com.challenge.dogbreeds.common.domain.model.Dog
+import com.challenge.dogbreeds.common.domain.model.SubBreed
 
 object DomainMock {
 

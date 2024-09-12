@@ -1,8 +1,6 @@
 package com.challenge.dogbreeds.domain.domain.usecase
 
 import com.challenge.dogbreeds.domain.repository.DogRepository
-import com.challenge.dogbreeds.domain.mock.DomainMock
-import com.challenge.dogbreeds.common.domain.entity.Dog
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -12,7 +10,6 @@ import org.junit.Before
 import org.junit.Test
 import com.challenge.dogbreeds.common.domain.Result
 import com.challenge.dogbreeds.domain.usecase.GetDogsWithBreedsUseCase
-import org.junit.Assert.assertEquals
 
 
 class GetDogsWithBreedsUseCaseTest {

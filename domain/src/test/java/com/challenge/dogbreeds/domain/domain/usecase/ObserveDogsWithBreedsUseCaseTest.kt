@@ -1,7 +1,6 @@
 package com.challenge.dogbreeds.domain.domain.usecase
 
-import com.challenge.dogbreeds.common.domain.Result
-import com.challenge.dogbreeds.common.domain.entity.Dog
+import com.challenge.dogbreeds.common.domain.model.Dog
 import com.challenge.dogbreeds.domain.repository.DogRepository
 import com.challenge.dogbreeds.domain.usecase.ObserveDogsWithBreedsUseCase
 import io.mockk.MockKAnnotations
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
 
 class ObserveDogsWithBreedsUseCaseTest {
     @MockK

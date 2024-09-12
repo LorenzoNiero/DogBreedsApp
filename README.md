@@ -27,7 +27,7 @@ The app follow this components:
 - **Hilt/Dagger** for dependency injection;
 - **WorkManager** for dispatch request api and save on database;
 - **Mockk** to mock data on unit test
-- Can find some unit test in the network module, domain module.
+- Can find some unit test in the network module, domain module, data module
 
 
 ## Modularazition
@@ -56,8 +56,8 @@ Every time the refresh button is pressed, all data is deleted from the database 
 
 
 ### Todo
-- obfuscation code with R8
-- implement more unit test
+- enable obfuscation code with R8
+- implement more unit test. For example in ViewModel
 
 ### Dependences libraries and version
 Add your dependencies in libs.versions.toml on directory gradle

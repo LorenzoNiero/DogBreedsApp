@@ -1,6 +1,6 @@
 package com.challenge.digbreeds.list.presentation.model
 
-import com.challenge.dogbreeds.common.domain.entity.Dog
+import com.challenge.dogbreeds.common.domain.model.Dog
 
 sealed class ListUiState {
     data object Loading : ListUiState()

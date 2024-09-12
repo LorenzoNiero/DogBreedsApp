@@ -1,4 +1,4 @@
-package com.challenge.dogbreeds.common.domain.entity
+package com.challenge.dogbreeds.common.domain.model
 
 interface IDog {
     val id: String

@@ -37,8 +37,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.challenge.digbreeds.list.R
 import com.challenge.digbreeds.list.presentation.model.ListUiState
-import com.challenge.dogbreeds.common.domain.entity.Dog
-import com.challenge.dogbreeds.common.domain.entity.SubBreed
+import com.challenge.dogbreeds.common.domain.model.Dog
+import com.challenge.dogbreeds.common.domain.model.SubBreed
 import com.challenge.dogbreeds.ui.component.cell.DogCell
 import com.challenge.dogbreeds.ui.component.cell.SubBreedCell
 import com.challenge.dogbreeds.ui.component.TopBar

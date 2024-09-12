@@ -22,8 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import com.challenge.dogbreeds.common.domain.entity.IDog
-import com.challenge.dogbreeds.common.domain.entity.StatusImage
+import com.challenge.dogbreeds.common.domain.model.IDog
+import com.challenge.dogbreeds.common.domain.model.StatusImage
 import com.challenge.dogbreeds.ui.R
 import com.challenge.dogbreeds.ui.component.ImageLoader
 import com.challenge.dogbreeds.ui.theme.Dimens

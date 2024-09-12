@@ -1,7 +1,6 @@
 package com.challenge.dogbreeds.domain.repository
 
-import com.challenge.dogbreeds.common.domain.entity.Dog
-import com.challenge.dogbreeds.common.domain.entity.DogImageStatus
+import com.challenge.dogbreeds.common.domain.model.Dog
 import kotlinx.coroutines.flow.Flow
 
 interface DogRepository {

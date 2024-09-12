@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.challenge.dogbreeds.common.domain.entity.Dog
+import com.challenge.dogbreeds.common.domain.model.Dog
 import com.challenge.dogbreeds.ui.component.CardSurface
 
 @Composable

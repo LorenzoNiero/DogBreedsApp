@@ -3,7 +3,7 @@ package com.challenge.dogbreeds.ui.component.cell
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.challenge.dogbreeds.common.domain.entity.SubBreed
+import com.challenge.dogbreeds.common.domain.model.SubBreed
 
 
 @Composable

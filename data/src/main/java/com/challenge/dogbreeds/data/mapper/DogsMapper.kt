@@ -1,9 +1,9 @@
 package com.challenge.dogbreeds.data.mapper
 
-import com.challenge.dogbreeds.common.domain.entity.Dog
-import com.challenge.dogbreeds.common.domain.entity.DogImageStatus
-import com.challenge.dogbreeds.common.domain.entity.StatusImage
-import com.challenge.dogbreeds.common.domain.entity.SubBreed
+import com.challenge.dogbreeds.common.domain.model.Dog
+import com.challenge.dogbreeds.common.domain.model.DogImageStatus
+import com.challenge.dogbreeds.common.domain.model.StatusImage
+import com.challenge.dogbreeds.common.domain.model.SubBreed
 import com.challenge.dogbreeds.database.model.BreedWithSubBreedsRelation
 import com.challenge.dogbreeds.database.model.ImageEmbedded
 import com.challenge.dogbreeds.database.model.SubBreedEntity

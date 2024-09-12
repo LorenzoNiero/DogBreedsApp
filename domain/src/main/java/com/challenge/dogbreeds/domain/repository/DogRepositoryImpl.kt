@@ -5,7 +5,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.challenge.dogbreeds.common.domain.entity.Dog
+import com.challenge.dogbreeds.common.domain.model.Dog
 import com.challenge.dogbreeds.data.datasource.BreedLocalDataSource
 import com.challenge.dogbreeds.data.mapper.asExternalModel
 import com.challenge.dogbreeds.data.mapper.mapToDomainModel
