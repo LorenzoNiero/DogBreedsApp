@@ -11,5 +11,4 @@ class DetailViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
     val breedId: String? = NavigationItem.Detail.getBreedId(state)
-
 }

@@ -22,7 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import com.challenge.dogbreeds.common.domain.model.IDog
+import com.challenge.dogbreeds.common.domain.model.IBreed
 import com.challenge.dogbreeds.common.domain.model.StatusImage
 import com.challenge.dogbreeds.ui.R
 import com.challenge.dogbreeds.ui.component.ImageLoader
@@ -32,7 +32,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 internal fun DogContentCell(
-    dog: IDog,
+    dog: IBreed,
     getImageUrl: (String) -> Unit,
     onClick: () -> Unit,
     isExpanded: Boolean? = null,

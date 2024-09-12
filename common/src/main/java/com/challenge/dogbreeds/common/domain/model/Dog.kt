@@ -5,6 +5,6 @@ data class Dog(
     override val name: String,
     val subBreeds: List<SubBreed>,
     override val image: DogImageStatus = DogImageStatus(null, StatusImage.NONE),
-) : IDog
+) : IBreed
 
 
