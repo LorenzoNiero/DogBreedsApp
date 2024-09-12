@@ -7,6 +7,10 @@ digraph {
 
   ":app" [fillcolor="#baffc9"];
   ":common" [fillcolor="#baffc9"];
+  ":data" [fillcolor="#baffc9"];
+  ":database" [fillcolor="#baffc9"];
+  ":domain" [fillcolor="#baffc9"];
+  ":feature:detail" [fillcolor="#baffc9"];
   ":feature:list" [fillcolor="#baffc9"];
   ":network" [fillcolor="#baffc9"];
   ":ui" [fillcolor="#baffc9"];
@@ -18,13 +22,26 @@ digraph {
   ":app" -> ":app"
   ":app" -> ":common" [style=dotted]
   ":app" -> ":feature:list" [style=dotted]
+  ":app" -> ":feature:detail" [style=dotted]
   ":app" -> ":ui" [style=dotted]
+  ":database" -> ":database"
   ":common" -> ":common"
+  ":data" -> ":network"
+  ":data" -> ":database"
+  ":data" -> ":data"
+  ":data" -> ":common" [style=dotted]
   ":ui" -> ":ui"
   ":ui" -> ":common" [style=dotted]
+  ":domain" -> ":domain"
+  ":domain" -> ":common" [style=dotted]
+  ":domain" -> ":data" [style=dotted]
   ":network" -> ":network"
+  ":feature:detail" -> ":feature:detail"
+  ":feature:detail" -> ":common" [style=dotted]
+  ":feature:detail" -> ":ui" [style=dotted]
+  ":feature:detail" -> ":domain" [style=dotted]
   ":feature:list" -> ":feature:list"
   ":feature:list" -> ":common" [style=dotted]
   ":feature:list" -> ":ui" [style=dotted]
-  ":feature:list" -> ":network" [style=dotted]
+  ":feature:list" -> ":domain" [style=dotted]
 }
