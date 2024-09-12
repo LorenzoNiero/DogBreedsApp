@@ -7,6 +7,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class DogsNetwork (
     val message: Map<String, List<String>>,
-    override val status: String
+    override val status: StatusResponse
 ) : NetworkResponseBase()
 

@@ -14,6 +14,15 @@ suspend fun <T> getResult(onError: (throwable: Throwable) -> Unit = {}, invoke: 
     }
 }
 
+fun <T> getResultBlocking(onError: (throwable: Throwable) -> Unit = {}, invoke:  () -> T): Result<T> {
+    return try {
+        Result.Success(invoke())
+    } catch( ex : Exception) {
+        onError(ex)
+        Result.Error(ex)
+    }
+}
+
 inline fun <T> Result<T>.onError(block: (Throwable) -> Unit): Result<T> {
     if (this is Result.Error) {
         block(throwable)

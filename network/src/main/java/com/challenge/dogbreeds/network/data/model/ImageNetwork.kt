@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ImageNetwork (
     val message: String,
-    override val status: String
+    override val status: StatusResponse
 ) : NetworkResponseBase()

@@ -21,7 +21,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,12 +49,12 @@ fun ListScreen (
     navController: NavHostController,
     viewModel: ListViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState
+    val uiState = viewModel.dogsUIState.collectAsState()
 
     ListContent(
-        uiState = uiState,
-        onRefresh = { viewModel.refreshList() },
-        getImageUrl = { viewModel.enqueueFetchImageUrl(it) }
+        uiState = uiState.value,
+        onRefresh = { viewModel.loadList() },
+        getImageUrl = { breadId, subBreadId-> viewModel.enqueueFetchImageUrl(breadId, subBreadId) }
     )
 }
 
@@ -62,7 +62,7 @@ fun ListScreen (
 private fun ListContent(
     uiState: ListUiState,
     onRefresh: () -> Unit,
-    getImageUrl: (String)-> Unit = {}
+    getImageUrl: (String, String?)-> Unit = { _, _ -> }
     )
 {
     Scaffold(
@@ -161,14 +161,14 @@ fun LazyListScope.accordion(
     isExpanded: Boolean,
     onItemClick: () -> Unit,
     onExpandClick: () -> Unit,
-    getImageUrl: (String)-> Unit
+    getImageUrl: (String, String?)-> Unit
 ) {
     item {
         DogCell(
             dog,
             modifier = Modifier.fillMaxWidth(),
             onClick = onItemClick,
-            getImageUrl = getImageUrl,
+            getImageUrl = { id -> getImageUrl(id, null)  },
             isExpanded = if (dog.subBreeds.isEmpty()) { null } else { isExpanded },
             onClickIcon = onExpandClick
         )
@@ -180,7 +180,7 @@ fun LazyListScope.accordion(
                 subBreed,
                 modifier = Modifier.fillMaxWidth(),
                 onClick = onItemClick,
-                getImageUrl = getImageUrl,
+                getImageUrl = { id -> getImageUrl(dog.id, id)  },
             )
             HorizontalDivider()
         }

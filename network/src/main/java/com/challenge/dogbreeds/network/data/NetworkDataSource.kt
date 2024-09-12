@@ -10,4 +10,5 @@ import com.challenge.dogbreeds.network.data.model.ImageNetwork
 interface NetworkDataSource {
     suspend fun fetchDogsWithSubBreeds(): DogsNetwork
     suspend fun fetchImageDogRandom(breedId : String): ImageNetwork
+    suspend fun fetchImageSubBreedRandom(breedId: String, subBreedId: String): ImageNetwork
 }

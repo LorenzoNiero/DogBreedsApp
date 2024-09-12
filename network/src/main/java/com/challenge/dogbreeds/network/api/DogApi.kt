@@ -21,9 +21,17 @@ interface DogApi {
 
     /**
      * Gets a random image of a dog
-     * @param id
+     * @param breedId dog breed id
      */
     @GET("breed/{breed}/images/random")
     suspend fun getBreedImage(@Path("breed") breedId: String) : ImageNetwork
+
+    /**
+     * Gets a random image of a dog
+     * @param breedId dog breed id
+     * @param subBreedId sub breed of dog breedId
+     */
+    @GET("breed/{breed}/{subBreedId}/images/random")
+    suspend fun getSubBreedImage(@Path("breed") breedId: String, @Path("subBreedId") subBreedId: String) : ImageNetwork
 
 }

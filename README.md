@@ -24,3 +24,6 @@ To manually regenerate the dependency graph run this command in the terminal:
 ./gradlew projectDependencyGraph
 ```
 
+### Todo
+- obfuscation code with R8
+- implement more unit test
