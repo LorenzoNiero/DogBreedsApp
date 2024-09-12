@@ -13,7 +13,7 @@ class BreedLocalDataSourceImpl @Inject constructor(
     private val subBreedDao: SubBreedDao
 ) : BreedLocalDataSource {
 
-    override fun onBreedsUpdate(): Flow<List<BreedWithSubBreedsRelation>> = dogBreedDao.observeAllBeerWithSubBreed()
+    override fun onBreedsUpdate(): Flow<List<BreedWithSubBreedsRelation>> = dogBreedDao.observeAllDogWithSubBreed()
 
     override fun insertDogBreed(dog: DogBreedEntity) {
         dogBreedDao.insert(dog)

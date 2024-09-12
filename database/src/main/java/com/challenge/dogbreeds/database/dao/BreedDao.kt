@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.Flow
 abstract class BreedDao : BaseDao<DogBreedEntity>(DogBreedEntity.TABLE_NAME)  {
 
     @Query(value = "SELECT * FROM breed order by name")
-    abstract fun observeAllBeer(): Flow<List<DogBreedEntity>>
+    abstract fun observeAllBreed(): Flow<List<DogBreedEntity>>
 
     @Query(value = "DELETE FROM breed")
     abstract suspend fun deleteAll()
 
     @Transaction
     @Query(value = "SELECT * FROM breed order by name")
-    abstract fun observeAllBeerWithSubBreed(): Flow<List<BreedWithSubBreedsRelation>>
+    abstract fun observeAllDogWithSubBreed(): Flow<List<BreedWithSubBreedsRelation>>
 
 }
