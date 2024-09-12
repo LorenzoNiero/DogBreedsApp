@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -51,9 +52,11 @@ fun ListScreen (
     viewModel: ListViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.dogsUIState.collectAsState()
+    val errorUIState by viewModel.errorMessageUiState
 
     ListContent(
         uiState = uiState.value,
+        messageError = errorUIState,
         onRefresh = { viewModel.loadList() },
         getImageUrl = { breadId, subBreadId-> viewModel.enqueueFetchImageUrl(breadId, subBreadId) },
         navController= navController,
@@ -64,8 +67,9 @@ fun ListScreen (
 private fun ListContent(
     uiState: ListUiState,
     onRefresh: () -> Unit,
-    getImageUrl: (String, String?)-> Unit = { _, _ -> },
+    getImageUrl: (String, String?) -> Unit = { _, _ -> },
     navController: NavHostController? = null,
+    messageError: String?,
     )
 {
     Scaffold(
@@ -90,6 +94,16 @@ private fun ListContent(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
+            messageError?.let {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = dimensionResource(R_UI.dimen.padding_list_vertical)),
+                    textAlign = TextAlign.Center,
+                    text = stringResource(R.string.error_label, messageError ?: "")
+                )
+            }
+
             when (uiState) {
                 ListUiState.Empty -> {
                     Text(
@@ -203,7 +217,8 @@ fun LazyListScope.accordion(
 private fun ListScreenPreview() {
     ListContent(
         uiState = ListUiState.Result(listOf(Dog("id","DogName", listOf(SubBreed("id","SubBreedName"))))),
-        onRefresh = {}
+        onRefresh = {},
+        messageError = "Error message"
     )
 }
 
@@ -212,7 +227,8 @@ private fun ListScreenPreview() {
 private fun ListScreen_Loading_Preview() {
     ListContent(
         uiState = ListUiState.Loading,
-        onRefresh = {}
+        onRefresh = {},
+        messageError = null
     )
 }
 
@@ -221,7 +237,8 @@ private fun ListScreen_Loading_Preview() {
 private fun ListScreen_Error_Preview() {
     ListContent(
         uiState = ListUiState.Error("message error"),
-        onRefresh = {}
+        onRefresh = {},
+        messageError = null
     )
 }
 
@@ -230,7 +247,8 @@ private fun ListScreen_Error_Preview() {
 private fun ListScreen_Empty_Preview() {
     ListContent(
         uiState = ListUiState.Empty,
-        onRefresh = {}
+        onRefresh = {},
+        messageError = null
     )
 }
 
