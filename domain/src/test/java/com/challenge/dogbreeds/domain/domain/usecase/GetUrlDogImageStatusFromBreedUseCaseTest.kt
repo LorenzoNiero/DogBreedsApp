@@ -1,8 +1,6 @@
 package com.challenge.dogbreeds.domain.domain.usecase
 
-import com.challenge.dogbreeds.domain.repository.DogRepository
 import com.challenge.dogbreeds.domain.mock.DomainMock
-import com.challenge.dogbreeds.common.domain.entity.Dog
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -19,12 +17,12 @@ class GetUrlDogImageStatusFromBreedUseCaseTest {
     @MockK
     private lateinit var repository: com.challenge.dogbreeds.domain.repository.DogRepository
 
-    private lateinit var useCase: com.challenge.dogbreeds.domain.usecase.GetUrlImageFromBreedUseCase
+    private lateinit var useCase: com.challenge.dogbreeds.domain.usecase.EnqueueFetchImageUrlByBreedIdUseCase
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        useCase = com.challenge.dogbreeds.domain.usecase.GetUrlImageFromBreedUseCase(repository)
+        useCase = com.challenge.dogbreeds.domain.usecase.EnqueueFetchImageUrlByBreedIdUseCase(repository)
     }
 
     @Test

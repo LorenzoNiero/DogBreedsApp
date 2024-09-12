@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetDogsWithBreedsUseCase @Inject constructor(
     private val dogsRepository: DogRepository
 ) {
-    suspend operator fun invoke(): Result<List<Dog>> = getResult {
+    suspend operator fun invoke(): Result<Unit> = getResult {
         dogsRepository.fetchAllDogs()
     }
 }
