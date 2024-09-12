@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.challenge.dogbreeds.detail.R
 import com.challenge.dogbreeds.ui.component.TopBar
 
 @Composable
@@ -29,7 +31,7 @@ fun DetailContent(
     Scaffold(
         topBar = {
             TopBar(
-                title = title ?: "n.d.",
+                title = title ?: stringResource(R.string.title_not_found),
                 onBackClick = {
                     navController?.popBackStack()
                 }
