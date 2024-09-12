@@ -33,13 +33,13 @@ The app follow this components:
 ## Modularazition
 The app follows an implementation of mudularazition by features:
 - *app* : main module to run app
-- *data* : it contains repository and work manager
-- *common* : classes used
-- *database* : contains utilit to mange db, models database and dao;
-- *model* : contains UI models class
-- *network* : it implements manage network,  network models, parse of data,
+- *data* : it contains 'data' layer such as datasource
+- *domain* : it contains domain layer such as repository, usecase
+- *common* : contains UI models class and utils for general purpose 
+- *database* : contains utils to manage db, models database and dao;
+- *network* : it implements manage network, network models, parse of data,
 - *ui* : it contains app theme and custom view;
-- *feature/list* : implements list dod page (homepage) and owr viewmodel;
+- *feature/list* : implements list dog page (homepage) and owr viewmodel;
 - *feature/detail* : implements detail dog page and owr view model. Created to show navigation
 
 This the graph of dependencies:
