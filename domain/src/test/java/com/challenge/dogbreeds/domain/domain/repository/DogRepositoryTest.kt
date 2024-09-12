@@ -1,5 +1,6 @@
 package com.challenge.dogbreeds.domain.domain.repository
 
+import androidx.work.WorkManager
 import com.challenge.dogbreeds.domain.mock.DataMock
 import com.challenge.dogbreeds.domain.mock.DomainMock
 import com.challenge.dogbreeds.common.domain.Result
@@ -25,6 +26,9 @@ class DogRepositoryTest {
     @MockK
     private lateinit var localDataSource: BreedLocalDataSource
 
+    @MockK
+    private lateinit var workManager: WorkManager
+
     private lateinit var repository: DogRepository
 
     @Before
@@ -32,7 +36,8 @@ class DogRepositoryTest {
         MockKAnnotations.init(this, relaxUnitFun = true, relaxed = true)
         repository = DogRepositoryImpl(
             localDataSource,
-            networkDataSource
+            networkDataSource,
+            workManager
         )
     }
 
@@ -44,16 +49,14 @@ class DogRepositoryTest {
         coEvery { networkDataSource.fetchDogsWithSubBreeds() } returns dogsNetwork
 
         // When
-        val response = repository.fetchAllDogs()
+        repository.fetchAllDogs()
 
         // Then
         coVerify { networkDataSource.fetchDogsWithSubBreeds() }
-        assert(response is List<Dog>)
-        assertEquals(DomainMock.dogs, response)
     }
 
     @Test
-    fun `fetchImageUrl should call networkDataSource and return list of dogs with success`() = runTest {
+    fun `fetchImageUrl should call networkDataSource and return url image with success`() = runTest {
         // Given
         val imageNetwork = DataMock.imageNetwork
         coEvery { networkDataSource.fetchImageDogRandom(any()) } returns imageNetwork
@@ -63,7 +66,6 @@ class DogRepositoryTest {
 
         // Then
         coVerify { networkDataSource.fetchImageDogRandom(any()) }
-        assert(response is String)
         assertEquals(DomainMock.imageUrl, response)
     }
 

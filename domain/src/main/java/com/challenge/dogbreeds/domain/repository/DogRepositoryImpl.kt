@@ -1,6 +1,5 @@
 package com.challenge.dogbreeds.domain.repository
 
-import android.content.Context
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
@@ -14,7 +13,6 @@ import com.challenge.dogbreeds.domain.worker.ImageDownloadWorker
 import com.challenge.dogbreeds.domain.worker.WorkConstraints
 import com.challenge.dogbreeds.network.data.NetworkDataSource
 import com.challenge.dogbreeds.network.data.model.StatusResponse
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -24,9 +22,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DogRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val localDataSource: BreedLocalDataSource,
     private val networkDataSource: NetworkDataSource,
+    private val workManager : WorkManager
 ) : DogRepository {
 
     override suspend fun fetchAllDogs() = withContext(Dispatchers.IO) {
@@ -76,8 +74,6 @@ class DogRepositoryImpl @Inject constructor(
     }
 
     override fun enqueueFetchImageUrlWork (breedId: String){
-        val workManager = WorkManager.getInstance(context)
-
         val work = OneTimeWorkRequestBuilder<ImageDownloadWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setConstraints(WorkConstraints)
