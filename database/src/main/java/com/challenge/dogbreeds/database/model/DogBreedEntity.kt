@@ -10,7 +10,7 @@ class DogBreedEntity (
     @PrimaryKey
     override val id: String,
     val name: String,
-//    val subBreeds: List<String> = emptyList()
+    @Embedded val image : ImageEmbedded = ImageEmbedded(null, null)
     ) : BaseEntity() {
 
     companion object {
@@ -18,36 +18,12 @@ class DogBreedEntity (
     }
 }
 
-@Entity(tableName = SubBreedEntity.TABLE_NAME)
-class SubBreedEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val breadId: String,
-    val name: String,
-    val parentBreed: String,
-) : IEntity {
-    companion object {
-        const val TABLE_NAME = "subBreed"
-    }
-}
 
-@Entity(tableName = ImageEntity.TABLE_NAME)
-data class ImageEntity(
-    @PrimaryKey
-    override val id: String, //id breed
-    var urlImage : String?,
-    var statusFailImage : Boolean? = null,
-): BaseEntity() {
-    companion object {
-        const val TABLE_NAME = "image"
-    }
-}
-
-
-data class BreedWithSubBreeds(
+data class BreedWithSubBreedsRelation(
     @Embedded val breed: DogBreedEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "parentBreed"
+        entityColumn = "parentBreedId"
     )
-    val subBreedEntitiys: List<SubBreedEntity>
+    val subBreedEntities: List<SubBreedEntity>
 )

@@ -55,9 +55,9 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    fun enqueueFetchImageUrl(breedId: String) {
+    fun enqueueFetchImageUrl(breedId: String, subBreedId : String?) {
         viewModelScope.launch {
-            enqueueFetchImageUrlByBreedIdUseCase(breedId)
+            enqueueFetchImageUrlByBreedIdUseCase(breedId,subBreedId)
         }
     }
 

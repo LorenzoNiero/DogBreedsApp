@@ -4,9 +4,8 @@ import com.challenge.dogbreeds.common.domain.entity.Dog
 import com.challenge.dogbreeds.common.domain.entity.DogImageStatus
 import com.challenge.dogbreeds.common.domain.entity.StatusImage
 import com.challenge.dogbreeds.common.domain.entity.SubBreed
-import com.challenge.dogbreeds.database.model.DogBreedEntity
-import com.challenge.dogbreeds.database.model.BreedWithSubBreeds
-import com.challenge.dogbreeds.database.model.ImageEntity
+import com.challenge.dogbreeds.database.model.BreedWithSubBreedsRelation
+import com.challenge.dogbreeds.database.model.ImageEmbedded
 import com.challenge.dogbreeds.database.model.SubBreedEntity
 import com.challenge.dogbreeds.network.data.model.DogsNetwork
 import java.util.Locale
@@ -31,41 +30,20 @@ private fun Map.Entry<String, List<String>>.mapToDomainModel() : Dog {
     )
 }
 
-fun BreedWithSubBreeds.asExternalModel() = Dog(
+fun BreedWithSubBreedsRelation.asExternalModel() = Dog(
     id = breed.id,
     name = breed.name.replaceFirstChar { it.uppercase(Locale.getDefault()) },
-    subBreeds = this.subBreedEntitiys.map { it.asSubBreedExternalModel() },
-//    image = DogImageStatus(this.breed.urlImage,
-//        when{
-//            breed.urlImage != null -> {
-//                StatusImage.SUCCESS
-//            }
-//            breed.statusFailImage == false -> {
-//                StatusImage.ERROR
-//            }
-//            else -> {
-//                StatusImage.NONE
-//            }
-//        })
+    subBreeds = this.subBreedEntities.map { it.asSubBreedExternalModel() },
+    image = breed.image.asExternalModel()
 )
 
 fun SubBreedEntity.asSubBreedExternalModel() = SubBreed(
-    id = breadId,
+    id = id,
     name = name.replaceFirstChar { it.uppercase(Locale.getDefault()) },
-//    image = DogImageStatus(urlImage, when{
-//        urlImage != null -> {
-//            StatusImage.SUCCESS
-//        }
-//        statusFailImage == false -> {
-//            StatusImage.ERROR
-//        }
-//        else -> {
-//            StatusImage.NONE
-//        }
-//    })
+    image = image.asExternalModel()
 )
 
-fun ImageEntity.asExternalModel() = DogImageStatus(this.urlImage,
+fun ImageEmbedded.asExternalModel() = DogImageStatus(this.urlImage,
     when{
         this.urlImage != null -> {
             StatusImage.SUCCESS

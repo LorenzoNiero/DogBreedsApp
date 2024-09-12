@@ -56,17 +56,35 @@ class DogRepositoryTest {
     }
 
     @Test
-    fun `fetchImageUrl should call networkDataSource and return url image with success`() = runTest {
+    fun `fetchImageUrl by breedId should call networkDataSource and update entity DogBreed with success`() = runTest {
         // Given
         val imageNetwork = DataMock.imageNetwork
         coEvery { networkDataSource.fetchImageDogRandom(any()) } returns imageNetwork
+        coEvery { localDataSource.getDogBreed(any()) } returns DataMock.dogsEntity
 
         // When
-        val response = repository.fetchImageUrl("breedId")
+        val response = repository.fetchImageUrl("breedId", null)
 
         // Then
         coVerify { networkDataSource.fetchImageDogRandom(any()) }
-        assertEquals(DomainMock.imageUrl, response)
+        coVerify { localDataSource.insertDogBreed(any()) }
+        assertEquals(Unit, response)
+    }
+
+    @Test
+    fun `fetchImageUrl with subBreed should call networkDataSource and update entity DogBreed with success`() = runTest {
+        // Given
+        val imageNetwork = DataMock.imageNetwork
+        coEvery { networkDataSource.fetchImageDogRandom(any()) } returns imageNetwork
+        coEvery { localDataSource.getSubBreed(any(), any()) } returns DataMock.subBreedEntity
+
+        // When
+        val response = repository.fetchImageUrl("breedId", "subBreedId")
+
+        // Then
+        coVerify { networkDataSource.fetchImageSubBreedRandom(any(), any()) }
+        coVerify { localDataSource.insertSubBreed(any()) }
+        assertEquals(Unit, response)
     }
 
 }

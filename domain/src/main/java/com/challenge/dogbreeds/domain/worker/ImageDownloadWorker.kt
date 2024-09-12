@@ -23,10 +23,13 @@ class ImageDownloadWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
-        val breedId = inputData.getString(KEY_ID_STRING) ?: return Result.failure()
+        val breedId = inputData.getString(KEY_BREAD_ID_STRING) ?: return Result.failure()
+        val subBreedId = runCatching {
+            inputData.getString(KEY_SUB_BREAD_ID_STRING)
+        }.getOrElse { null }
 
         return try {
-            dogRepository.fetchImageUrl(breedId)
+            dogRepository.fetchImageUrl(breedId, subBreedId)
             Result.success()
         } catch (e: Exception) {
             Result.failure()
@@ -34,6 +37,7 @@ class ImageDownloadWorker @AssistedInject constructor(
     }
 
     companion object{
-        val KEY_ID_STRING = "breedId"
+        const val KEY_BREAD_ID_STRING = "breedId"
+        const val KEY_SUB_BREAD_ID_STRING = "subBreedId"
     }
 }

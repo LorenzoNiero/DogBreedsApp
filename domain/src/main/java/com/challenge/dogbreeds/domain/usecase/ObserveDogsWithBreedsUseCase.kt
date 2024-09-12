@@ -11,7 +11,6 @@ class ObserveDogsWithBreedsUseCase @Inject constructor(
     private val dogsRepository: DogRepository
 ) {
     operator fun invoke(): Flow<List<Dog>> = dogsRepository.observeAllDogs()
-
 }
 
 

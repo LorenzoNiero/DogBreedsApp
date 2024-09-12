@@ -2,7 +2,6 @@ package com.challenge.dogbreeds.database.di
 
 import com.challenge.dogbreeds.database.dao.BreedDao
 import com.challenge.dogbreeds.database.AppDatabase
-import com.challenge.dogbreeds.database.dao.ImageDao
 import com.challenge.dogbreeds.database.dao.SubBreedDao
 import dagger.Module
 import dagger.Provides
@@ -22,12 +21,4 @@ object DaoModule {
     fun providesSubBreedDao(
         database: AppDatabase
     ): SubBreedDao = database.subBreedDao()
-
-
-    @Provides
-    fun providesImageDao(
-        database: AppDatabase
-    ): ImageDao = database.imageDao()
-
-
 }

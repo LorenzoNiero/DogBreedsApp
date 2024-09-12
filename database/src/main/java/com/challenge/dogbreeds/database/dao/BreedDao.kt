@@ -5,7 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.challenge.dogbreeds.database.dao.base.BaseDao
 import com.challenge.dogbreeds.database.model.DogBreedEntity
-import com.challenge.dogbreeds.database.model.BreedWithSubBreeds
+import com.challenge.dogbreeds.database.model.BreedWithSubBreedsRelation
 import kotlinx.coroutines.flow.Flow
 
 
@@ -20,6 +20,6 @@ abstract class BreedDao : BaseDao<DogBreedEntity>(DogBreedEntity.TABLE_NAME)  {
 
     @Transaction
     @Query(value = "SELECT * FROM breed order by name")
-    abstract fun observeAllBeerWithSubBreed(): Flow<List<BreedWithSubBreeds>>
+    abstract fun observeAllBeerWithSubBreed(): Flow<List<BreedWithSubBreedsRelation>>
 
 }

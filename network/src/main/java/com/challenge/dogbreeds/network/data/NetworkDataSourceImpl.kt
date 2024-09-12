@@ -31,5 +31,6 @@ class RetrofitNetwork @Inject constructor(
 
     override suspend fun fetchDogsWithSubBreeds(): DogsNetwork = dogApi.getAllBreeds()
     override suspend fun fetchImageDogRandom(breedId: String): ImageNetwork = dogApi.getBreedImage(breedId)
+    override suspend fun fetchImageSubBreedRandom(breedId: String, subBreedId: String): ImageNetwork = dogApi.getSubBreedImage(breedId, subBreedId)
 
 }

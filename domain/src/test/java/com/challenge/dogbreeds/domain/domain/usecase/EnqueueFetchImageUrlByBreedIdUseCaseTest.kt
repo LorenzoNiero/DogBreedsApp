@@ -1,6 +1,8 @@
 package com.challenge.dogbreeds.domain.domain.usecase
 
-import com.challenge.dogbreeds.domain.mock.DomainMock
+import com.challenge.dogbreeds.common.domain.Result
+import com.challenge.dogbreeds.domain.repository.DogRepository
+import com.challenge.dogbreeds.domain.usecase.EnqueueFetchImageUrlByBreedIdUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -8,13 +10,9 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import com.challenge.dogbreeds.common.domain.Result
-import com.challenge.dogbreeds.domain.repository.DogRepository
-import com.challenge.dogbreeds.domain.usecase.EnqueueFetchImageUrlByBreedIdUseCase
-import org.junit.Assert.assertEquals
 
 
-class GetUrlDogImageStatusFromBreedUseCaseTest {
+class EnqueueFetchImageUrlByBreedIdUseCaseTest {
 
     @MockK
     private lateinit var repository: DogRepository
@@ -30,26 +28,27 @@ class GetUrlDogImageStatusFromBreedUseCaseTest {
     @Test
     fun `use case should call repository without error`() = runTest {
         // Given
-        coEvery { repository.fetchImageUrl(any()) } returns Unit
+        coEvery { repository.enqueueFetchImageUrlWork(any(), any()) } returns Unit
 
         // When
-        val result = useCase("breedId")
+        val result = useCase("breedId", null)
 
         // Then
-        coVerify { repository.fetchImageUrl(any()) }
+        coVerify { repository.enqueueFetchImageUrlWork(any(), any()) }
         assert(result is Result.Success<Unit> )
     }
 
     @Test
     fun `use case should call repository and return with error`() = runTest {
         // Given
-        coEvery { repository.fetchImageUrl(any()) } throws Exception()
+        coEvery { repository.enqueueFetchImageUrlWork(any(), any()) } throws Exception()
 
         // When
-        val response = useCase("breedId")
+        val response = useCase("breedId", null)
 
         // Then
-        coVerify { repository.fetchImageUrl(any()) }
+        coVerify { repository.enqueueFetchImageUrlWork(any(), any()) }
         assert(response is Result.Error)
     }
 }
+

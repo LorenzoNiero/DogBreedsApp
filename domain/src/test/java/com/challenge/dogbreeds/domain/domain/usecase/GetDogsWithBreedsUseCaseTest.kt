@@ -11,15 +11,16 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import com.challenge.dogbreeds.common.domain.Result
+import com.challenge.dogbreeds.domain.usecase.GetDogsWithBreedsUseCase
 import org.junit.Assert.assertEquals
 
 
 class GetDogsWithBreedsUseCaseTest {
 
     @MockK
-    private lateinit var repository: com.challenge.dogbreeds.domain.repository.DogRepository
+    private lateinit var repository: DogRepository
 
-    private lateinit var useCase: com.challenge.dogbreeds.domain.usecase.GetDogsWithBreedsUseCase
+    private lateinit var useCase: GetDogsWithBreedsUseCase
 
     @Before
     fun setUp() {
@@ -30,16 +31,14 @@ class GetDogsWithBreedsUseCaseTest {
     @Test
     fun `use case should call repository without error`() = runTest {
         // Given
-        val dogsList = DomainMock.dogs
-        coEvery { repository.fetchAllDogs() } returns dogsList
+        coEvery { repository.fetchAllDogs() } returns Unit
 
         // When
         val response = useCase()
 
         // Then
         coVerify { repository.fetchAllDogs() }
-        assert(response is Result.Success<List<Dog>>)
-        assertEquals(dogsList, (response as Result.Success<List<Dog>>).data)
+        assert(response is Result.Success<Unit>)
     }
 
     @Test

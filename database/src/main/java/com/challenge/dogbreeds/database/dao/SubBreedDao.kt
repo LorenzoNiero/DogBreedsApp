@@ -11,4 +11,7 @@ abstract class SubBreedDao : IBaseDao<SubBreedEntity>  {
     @Query(value = "DELETE FROM subBreed")
     abstract suspend fun deleteAll()
 
+    @Query(value = "SELECT * FROM subBreed WHERE id = :id AND parentBreedId = :parentBreedId")
+    abstract suspend fun getEntity(id: String, parentBreedId: String): SubBreedEntity?
+
 }

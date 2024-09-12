@@ -9,7 +9,7 @@ import javax.inject.Inject
 class EnqueueFetchImageUrlByBreedIdUseCase @Inject constructor(
     private val dogsRepository: DogRepository
 ) {
-    operator fun invoke(breedId : String) : Result<Unit> = getResultBlocking {
-        dogsRepository.enqueueFetchImageUrlWork(breedId = breedId)
+    operator fun invoke(breedId : String,subBreedId: String?) : Result<Unit> = getResultBlocking {
+        dogsRepository.enqueueFetchImageUrlWork(breedId = breedId, subBreedId)
     }
 }

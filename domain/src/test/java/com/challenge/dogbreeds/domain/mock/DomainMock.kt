@@ -10,7 +10,6 @@ object DomainMock {
             id = "affenpinscher",
             name = "Affenpinscher",
             subBreeds = listOf(),
-            image = null
         ),
         Dog(
             id = "bulldog",
@@ -19,20 +18,16 @@ object DomainMock {
                 SubBreed(
                     id = "boston",
                     name = "Boston",
-                    image = null
                 ),
                 SubBreed(
                     id = "english",
                     name = "English",
-                    image = null
                 ),
                 SubBreed(
                     id = "french",
                     name = "French",
-                    image = null
                 )
             ),
-            image = null
         )
 
     )
