@@ -36,4 +36,4 @@ allprojects {
     }
 }
 
-//apply(from = file("gradle/projectDependencyGraph.gradle"))
+apply(from = file("gradle/projectDependencyGraph.gradle"))
