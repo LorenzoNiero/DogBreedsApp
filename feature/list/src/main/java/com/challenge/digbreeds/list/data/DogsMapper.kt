@@ -29,14 +29,6 @@ private fun Map.Entry<String, List<String>>.mapToDomainModel() : Dog {
     )
 }
 
-//fun BreedEntity.asExternalModel() = Dog(
-//    id = id,
-//    name = name,
-//    subBreeds = emptyList(),
-//    image = DogImageStatus(urlImage, if(urlImage != null) {StatusImage.SUCCESS } else {StatusImage.NONE})
-//)
-
-
 fun BreedWithSubBreeds.asExternalModel() = Dog(
     id = this.breed.id,
     name = this.breed.name.replaceFirstChar { it.uppercase(Locale.getDefault()) },

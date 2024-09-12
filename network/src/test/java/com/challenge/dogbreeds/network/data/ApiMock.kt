@@ -1,6 +1,7 @@
 package com.challenge.dogbreeds.network.data
 
 import com.challenge.dogbreeds.network.data.model.DogsNetwork
+import com.challenge.dogbreeds.network.data.model.StatusResponse
 
 object ApiMock {
     val breedsNetwork = DogsNetwork(
@@ -11,6 +12,6 @@ object ApiMock {
                 "shepherd"
             )
         ),
-        status = "success"
+        status = StatusResponse.SUCCESS
     )
 }

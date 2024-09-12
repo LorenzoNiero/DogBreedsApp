@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
+    alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "com.challenge.dogbreeds.common"
-
+    namespace = "com.challenge.dogbreeds.data"
     flavorDimensions += "environment"
     productFlavors {
         create("dev") {
@@ -19,7 +20,13 @@ android {
 }
 
 dependencies {
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.compose)
+
+    implementation(libs.kotlinx.coroutines.android)
+
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation (libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
