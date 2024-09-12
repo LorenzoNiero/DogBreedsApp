@@ -1,5 +1,9 @@
 # DogBreedsApp
 
+### Todo
+- obfuscation code with R8
+- implement more unit test
+
 ### Dependences libraries and version
 Add your dependencies in libs.versions.toml on directory gradle
 
@@ -23,7 +27,3 @@ To manually regenerate the dependency graph run this command in the terminal:
 ```sh
 ./gradlew projectDependencyGraph
 ```
-
-### Todo
-- obfuscation code with R8
-- implement more unit test

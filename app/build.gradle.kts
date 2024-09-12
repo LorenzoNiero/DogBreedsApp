@@ -60,6 +60,7 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":feature:list"))
+    implementation(project(":feature:detail"))
     implementation(project(":ui"))
 
     implementation(platform(libs.androidx.compose.bom))
