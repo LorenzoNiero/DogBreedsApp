@@ -14,7 +14,7 @@ import com.challenge.dogbreeds.common.domain.Result
 import org.junit.Assert.assertEquals
 
 
-class GetUrlImageFromBreedUseCaseTest {
+class GetUrlDogImageStatusFromBreedUseCaseTest {
 
     @MockK
     private lateinit var repository: DogRepository

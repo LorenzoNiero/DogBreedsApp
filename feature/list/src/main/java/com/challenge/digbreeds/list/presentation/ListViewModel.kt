@@ -8,8 +8,11 @@ import com.challenge.digbreeds.list.domain.usecase.GetDogsWithBreedsUseCase
 import com.challenge.digbreeds.list.domain.usecase.GetUrlImageFromBreedUseCase
 import com.challenge.digbreeds.list.presentation.model.ListUiState
 import com.challenge.dogbreeds.common.domain.Result
+import com.challenge.dogbreeds.common.domain.entity.DogImageStatus
+import com.challenge.dogbreeds.common.domain.entity.StatusImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -24,8 +27,22 @@ class ListViewModel @Inject constructor(
     private val _uiState by lazy { mutableStateOf<ListUiState>(ListUiState.Loading) }
     internal val uiState: State<ListUiState> by lazy { _uiState }
 
+    private val imageUpdateFlow = MutableSharedFlow<String>()
+
     init {
-        refresh()
+        refreshList()
+
+        viewModelScope.launch {
+            imageUpdateFlow.collect{ breedId ->
+                fetchUrlImage(breedId)
+            }
+        }
+    }
+
+    fun refreshList() {
+        viewModelScope.launch {
+            fetchDogs()
+        }
     }
 
     private suspend fun fetchDogs() {
@@ -50,36 +67,44 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    suspend fun loadImage(breedId : String) {
-        withContext(Dispatchers.IO) {
-            when (val result = getUrlImageFromBreedUseCase(breedId)) {
-                is Result.Error -> {
+    fun enqueueFetchImageUrl(breedId : String) {
+        viewModelScope.launch {
+            imageUpdateFlow.emit(breedId)
+        }
+    }
 
+    private suspend fun fetchUrlImage(breedId : String) {
+        withContext(Dispatchers.IO) {
+            val statusImage = when (val result = getUrlImageFromBreedUseCase(breedId)) {
+                is Result.Error -> {
+                    DogImageStatus(null, StatusImage.ERROR)
                 }
 
                 is Result.Success -> {
-                    val uiState = uiState.value
-                    if (uiState is ListUiState.Result) {
-                        _uiState.value = uiState.copy(
-                            dogs = uiState.dogs.map { dog ->
-                                if (dog.name == breedId) {
-                                    dog.copy(imageUrl = result.data)
-                                } else {
-                                    dog
-                                }
-                            }
-                        )
-                    }
+                    DogImageStatus(result.data, StatusImage.SUCCESS)
                 }
+            }
+
+            val uiState = uiState.value
+            if (uiState is ListUiState.Result) {
+                _uiState.value = uiState.copy(
+                    dogs = uiState.dogs.map { dog ->
+                        if (dog.id == breedId) {
+                            dog.copy(image = statusImage)
+                        } else {
+                            dog.copy(subBreeds = dog.subBreeds.map { subBreed ->
+                                if (subBreed.id == breedId) {
+                                    subBreed.copy(image = statusImage)
+                                }
+                                else{
+                                    subBreed
+                                }
+                            })
+                        }
+                    }
+                )
             }
         }
     }
-
-    fun refresh() {
-        viewModelScope.launch {
-            fetchDogs()
-        }
-    }
-
 }
 
