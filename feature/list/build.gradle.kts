@@ -30,8 +30,6 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":ui"))
     implementation(project(":domain"))
-    implementation(project(":network"))
-    implementation(project(":database"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)

@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.challenge.digbreeds.list.presentation.ListScreen
+import com.challenge.dogbreeds.detail.presentation.DetailScreen
 import com.challenge.dogbreeds.ui.navigation.NavigationItem
 
 /**
@@ -26,8 +27,7 @@ fun AppNavHost(
         composable(NavigationItem.Detail.route,
             arguments = NavigationItem.Detail.navArguments
             ) {
-            //todo added screen detail
-//            DetailScreen(navController)
+            DetailScreen(navController)
         }
     }
 }

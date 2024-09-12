@@ -42,6 +42,7 @@ import com.challenge.dogbreeds.common.domain.entity.SubBreed
 import com.challenge.dogbreeds.ui.component.cell.DogCell
 import com.challenge.dogbreeds.ui.component.cell.SubBreedCell
 import com.challenge.dogbreeds.ui.component.TopBar
+import com.challenge.dogbreeds.ui.navigation.NavigationItem
 import com.challenge.dogbreeds.ui.R as R_UI
 
 @Composable
@@ -54,7 +55,8 @@ fun ListScreen (
     ListContent(
         uiState = uiState.value,
         onRefresh = { viewModel.loadList() },
-        getImageUrl = { breadId, subBreadId-> viewModel.enqueueFetchImageUrl(breadId, subBreadId) }
+        getImageUrl = { breadId, subBreadId-> viewModel.enqueueFetchImageUrl(breadId, subBreadId) },
+        navController= navController,
     )
 }
 
@@ -62,7 +64,8 @@ fun ListScreen (
 private fun ListContent(
     uiState: ListUiState,
     onRefresh: () -> Unit,
-    getImageUrl: (String, String?)-> Unit = { _, _ -> }
+    getImageUrl: (String, String?)-> Unit = { _, _ -> },
+    navController: NavHostController? = null,
     )
 {
     Scaffold(
@@ -141,7 +144,11 @@ private fun ListContent(
                                 dog = dog,
                                 isExpanded = isExpandedMap[index] ?: false,
                                 onItemClick = {
-                                   //todo: navigate to detail
+                                    navController?.navigate(
+                                        NavigationItem.Detail.buildBreedDetailsRoute(
+                                            dog.id
+                                        )
+                                    )
                                 },
                                 onExpandClick = {
                                     isExpandedMap[index] = !(isExpandedMap[index] ?: false)
