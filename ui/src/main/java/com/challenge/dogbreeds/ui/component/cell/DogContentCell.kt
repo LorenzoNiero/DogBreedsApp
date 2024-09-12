@@ -85,7 +85,6 @@ internal fun DogContentCell(
             dog.name,
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
-//                modifier = Modifier.weight(1.0f)
         )
 
         isExpanded?.let {
