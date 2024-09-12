@@ -1,4 +1,4 @@
-package com.challenge.digbreeds.list.mock
+package com.challenge.dogbreeds.domain.mock
 
 import com.challenge.dogbreeds.common.domain.entity.Dog
 import com.challenge.dogbreeds.common.domain.entity.SubBreed

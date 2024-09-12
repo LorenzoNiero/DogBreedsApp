@@ -1,9 +1,9 @@
-package com.challenge.digbreeds.list.domain.repository
+package com.challenge.dogbreeds.domain.repository
 
-import com.challenge.digbreeds.list.data.asExternalModel
-import com.challenge.digbreeds.list.data.mapToDomainModel
 import com.challenge.dogbreeds.common.domain.entity.Dog
-import com.challenge.dogbreeds.database.dao.BreedDao
+import com.challenge.dogbreeds.data.datasource.BreedLocalDataSource
+import com.challenge.dogbreeds.data.mapper.asExternalModel
+import com.challenge.dogbreeds.data.mapper.mapToDomainModel
 import com.challenge.dogbreeds.database.model.BreedEntity
 import com.challenge.dogbreeds.network.data.NetworkDataSource
 import com.challenge.dogbreeds.network.data.model.StatusResponse
@@ -15,21 +15,34 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DogRepositoryImpl @Inject constructor(
+    private val localDataSource: BreedLocalDataSource,
     private val networkDataSource: NetworkDataSource,
-    private val breedDao: BreedDao
 ) : DogRepository {
 
     override suspend fun fetchAllDogs() : List<Dog> = withContext(Dispatchers.IO) {
         val dogsNetwork = networkDataSource.fetchDogsWithSubBreeds()
 
         if (dogsNetwork.status == StatusResponse.SUCCESS) {
-            breedDao.deleteAll()
+            localDataSource.deleteAllBreed()
+
+            val dogs = dogsNetwork.mapToDomainModel()
 
             //save to db
-            dogsNetwork.message.forEach { dog ->
-                breedDao.insert(BreedEntity(dog.key, dog.key, null, null))
-                dog.value.forEach { subBreed ->
-                    breedDao.insert(BreedEntity(subBreed, subBreed, null, dog.key))
+            dogs.forEach { dog ->
+                localDataSource.insertOrReplace(
+                    BreedEntity(
+                    id = dog.id,
+                    name = dog.name,
+                    urlImage = dog.image.imageUrl,
+                    mainBreed = null
+                ))
+                dog.subBreeds.forEach { subBreed ->
+                    localDataSource.insertOrReplace( BreedEntity(
+                        id = subBreed.id,
+                        name = subBreed.name,
+                        urlImage = subBreed.image.imageUrl,
+                        mainBreed = dog.id
+                    ))
                 }
             }
         }
@@ -38,19 +51,19 @@ class DogRepositoryImpl @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun observeAllDogs(): Flow<List<Dog>> = breedDao.observeAllBeerWithSubBreed().mapLatest { dog ->
+    override fun observeAllDogs(): Flow<List<Dog>> = localDataSource.onBreedsUpdate().mapLatest { dog ->
         dog.map { it.asExternalModel() }
     }
 
     override suspend fun fetchImageUrl(breedId: String) : String = withContext(Dispatchers.IO) {
-        val breedEntity = breedDao.getEntity(breedId)
+        val breedEntity = localDataSource.getBreed(breedId)
 
         val urlImg = runCatching {
             val urlImg = networkDataSource.fetchImageDogRandom(breedId).message
 
             breedEntity?.also {
                 breedEntity.urlImage = urlImg
-                breedDao.insert(breedEntity)
+                localDataSource.insertOrReplace(breedEntity)
             }
 
             return@runCatching urlImg
@@ -62,4 +75,6 @@ class DogRepositoryImpl @Inject constructor(
     }
 
 }
+
+
 

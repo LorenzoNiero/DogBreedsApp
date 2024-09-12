@@ -21,6 +21,10 @@ android {
 
 dependencies {
     implementation(libs.hilt.android)
+    implementation(project(":common"))
+    api(project(":network"))
+    api(project(":database"))
+
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.compose)
 

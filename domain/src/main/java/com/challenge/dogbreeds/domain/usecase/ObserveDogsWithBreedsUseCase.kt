@@ -1,6 +1,6 @@
-package com.challenge.digbreeds.list.domain.usecase
+package com.challenge.dogbreeds.domain.usecase
 
-import com.challenge.digbreeds.list.domain.repository.DogRepository
+import com.challenge.dogbreeds.domain.repository.DogRepository
 import com.challenge.dogbreeds.common.domain.Result
 import com.challenge.dogbreeds.common.domain.entity.Dog
 import com.challenge.dogbreeds.common.domain.getResult

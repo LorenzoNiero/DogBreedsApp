@@ -22,7 +22,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -54,7 +53,7 @@ fun ListScreen (
 
     ListContent(
         uiState = uiState.value,
-        onRefresh = { viewModel.refreshList() },
+        onRefresh = { viewModel.loadList() },
         getImageUrl = { viewModel.enqueueFetchImageUrl(it) }
     )
 }

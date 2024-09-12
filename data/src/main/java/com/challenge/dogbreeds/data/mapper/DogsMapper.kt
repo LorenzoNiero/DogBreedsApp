@@ -1,4 +1,4 @@
-package com.challenge.digbreeds.list.data
+package com.challenge.dogbreeds.data.mapper
 
 import com.challenge.dogbreeds.common.domain.entity.Dog
 import com.challenge.dogbreeds.common.domain.entity.DogImageStatus

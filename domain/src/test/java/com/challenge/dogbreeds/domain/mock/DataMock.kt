@@ -1,4 +1,4 @@
-package com.challenge.digbreeds.list.mock
+package com.challenge.dogbreeds.domain.mock
 
 import com.challenge.dogbreeds.network.data.model.DogsNetwork
 import com.challenge.dogbreeds.network.data.model.ImageNetwork

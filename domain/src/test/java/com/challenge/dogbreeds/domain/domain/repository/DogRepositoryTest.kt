@@ -1,9 +1,12 @@
-package com.challenge.digbreeds.list.domain.repository
+package com.challenge.dogbreeds.domain.domain.repository
 
-import com.challenge.digbreeds.list.mock.DataMock
-import com.challenge.digbreeds.list.mock.DomainMock
+import com.challenge.dogbreeds.domain.mock.DataMock
+import com.challenge.dogbreeds.domain.mock.DomainMock
 import com.challenge.dogbreeds.common.domain.Result
 import com.challenge.dogbreeds.common.domain.entity.Dog
+import com.challenge.dogbreeds.data.datasource.BreedLocalDataSource
+import com.challenge.dogbreeds.domain.repository.DogRepository
+import com.challenge.dogbreeds.domain.repository.DogRepositoryImpl
 import com.challenge.dogbreeds.network.data.NetworkDataSource
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -19,12 +22,16 @@ class DogRepositoryTest {
     @MockK
     private lateinit var networkDataSource: NetworkDataSource
 
+    @MockK
+    private lateinit var localDataSource: BreedLocalDataSource
+
     private lateinit var repository: DogRepository
 
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true, relaxed = true)
         repository = DogRepositoryImpl(
+            localDataSource,
             networkDataSource
         )
     }

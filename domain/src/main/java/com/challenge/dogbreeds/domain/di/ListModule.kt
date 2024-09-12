@@ -1,7 +1,7 @@
-package com.challenge.digbreeds.list.di
+package com.challenge.dogbreeds.domain.di
 
-import com.challenge.digbreeds.list.domain.repository.DogRepository
-import com.challenge.digbreeds.list.domain.repository.DogRepositoryImpl
+import com.challenge.dogbreeds.domain.repository.DogRepository
+import com.challenge.dogbreeds.domain.repository.DogRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
-package com.challenge.digbreeds.list.domain.usecase
+package com.challenge.dogbreeds.domain.domain.usecase
 
-import com.challenge.digbreeds.list.domain.repository.DogRepository
-import com.challenge.digbreeds.list.mock.DomainMock
+import com.challenge.dogbreeds.domain.repository.DogRepository
+import com.challenge.dogbreeds.domain.mock.DomainMock
 import com.challenge.dogbreeds.common.domain.entity.Dog
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -17,14 +17,14 @@ import org.junit.Assert.assertEquals
 class GetUrlDogImageStatusFromBreedUseCaseTest {
 
     @MockK
-    private lateinit var repository: DogRepository
+    private lateinit var repository: com.challenge.dogbreeds.domain.repository.DogRepository
 
-    private lateinit var useCase: GetUrlImageFromBreedUseCase
+    private lateinit var useCase: com.challenge.dogbreeds.domain.usecase.GetUrlImageFromBreedUseCase
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        useCase = GetUrlImageFromBreedUseCase(repository)
+        useCase = com.challenge.dogbreeds.domain.usecase.GetUrlImageFromBreedUseCase(repository)
     }
 
     @Test
